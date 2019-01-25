@@ -29,8 +29,9 @@ namespace Project.OData
             catch (Exception ex)
             {
                 // Value cannot be null.Parameter name: type
+                throw ex;
             }
-
+                        
             return Ok(new List<Product> {
                 new Product { Id = 1, code = "mk100", colors = new List<Color> { new Color { Id = 1, name = "red" }, new Color { Id = 2, name = "yellow" } } },
                 new Product { Id = 2, code = "mk200", colors = new List<Color> { new Color { Id = 1, name = "red" }, new Color { Id = 2, name = "yellow" } } },
