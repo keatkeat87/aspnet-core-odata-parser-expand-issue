@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:DataServices>
+        <Schema Namespace="Project.OData" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityType Name="Product">
+                <Key>
+                    <PropertyRef Name="Id" />
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+                <Property Name="code" Type="Edm.String" />
+                <NavigationProperty Name="colors" Type="Collection(Project.OData.Color)" />
+            </EntityType>
+            <EntityType Name="Color">
+                <Key>
+                    <PropertyRef Name="Id" />
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+                <Property Name="name" Type="Edm.String" />
+                <NavigationProperty Name="product" Type="Project.OData.Product" />
+            </EntityType>
+        </Schema>
+        <Schema Namespace="Rpc" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <Function Name="GetProducts" IsBound="true">
+                <Parameter Name="bindingParameter" Type="Collection(Project.OData.Product)" />
+                <ReturnType Type="Collection(Project.OData.Product)" />
+            </Function>
+        </Schema>
+        <Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="Container">
+                <EntitySet Name="Products" EntityType="Project.OData.Product">
+                    <NavigationPropertyBinding Path="colors" Target="Colors" />
+                </EntitySet>
+                <EntitySet Name="Colors" EntityType="Project.OData.Color">
+                    <NavigationPropertyBinding Path="product" Target="Products" />
+                </EntitySet>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
